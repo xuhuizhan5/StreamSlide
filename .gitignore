@@ -1,0 +1,4 @@
+.env
+output/*
+temp_files/*
+venv
