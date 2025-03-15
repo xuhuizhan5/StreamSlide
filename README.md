@@ -1,6 +1,6 @@
 # StreamSlide
 
-StreamSlide is an AI-powered tool that transforms PDF documents (especially research papers) into professional PowerPoint presentations with minimal effort. Leveraging Google's Gemini API, it automatically extracts content, captions images, and generates structured presentations.
+StreamSlide is an AI-powered tool that transforms PDF documents into professional PowerPoint presentations with minimal effort. Leveraging Google's Gemini API, it automatically extracts content, captions images, and generates structured presentations. Users can provide customized prompts to tailor the presentation exactly to their needs - whether that's using only specific sections of a PDF, adjusting titles, or setting a target presentation duration to optimize content density.
 
 ![StreamSlide UI Demo](./demo/UI_demo.png)
 
@@ -14,6 +14,8 @@ StreamSlide is an AI-powered tool that transforms PDF documents (especially rese
 - **Customizable Themes**: Personalize your presentation with color theme options
 - **User-Friendly Interface**: Simple Streamlit interface with progress tracking
 - **API Key Management**: Use environment variables or enter your API key directly
+- **Customizable Prompts**: Specify exactly what content you want included or emphasized from your PDF
+- **Flexible Content Selection**: Choose to use the entire document or focus on specific sections
 
 ## Demo
 
@@ -34,7 +36,7 @@ Check out the demo folder for sample PDF documents and their generated PowerPoin
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/xuhuizhan5/StreamSlide
+   git clone https://github.com/xuhuizhan5/StreamSlide.git
    cd StreamSlide
    ```
 2. Create a virtual environment:
@@ -75,8 +77,8 @@ Check out the demo folder for sample PDF documents and their generated PowerPoin
 4. Upload a PDF document
 5. Configure presentation settings:
 
-   - Describe what you want in the presentation
-   - Set presentation duration (minutes)
+   - Write a customized prompt describing what you want in the presentation (specific sections, title adjustments, etc.)
+   - Set presentation duration (minutes) to optimize content density
    - Customize color theme
 6. Click "Generate Presentation" and watch the magic happen
 7. Download your professionally created PowerPoint presentation
@@ -135,6 +137,22 @@ StreamSlide/
 └── output/                 # Generated PowerPoint files
 ```
 
+## Configuration Options
+
+### Gemini Model Selection
+
+By default, StreamSlide uses the `gemini-1.5-flash` model which is available on the free tier. You can modify this in `app.py` by changing the `GEMINI_MODEL` constant:
+
+```python
+# Current default (free tier)
+GEMINI_MODEL = "gemini-1.5-flash"
+
+# For potentially better performance (may have usage caps)
+# GEMINI_MODEL = "gemini-1.5-pro"
+```
+
+Pro models generally offer better performance but come with stricter usage caps on the free tier. If you have a paid Google AI Studio account, you might want to switch to the Pro model for enhanced results.
+
 ## Requirements
 
 - streamlit
@@ -156,6 +174,7 @@ StreamSlide/
 - The free tier of Gemini API has rate limits
 - Only supports PDF files as input
 - Table formatting in PowerPoint is simplified
+- Free-tier Gemini models may have lower quality output than Pro models
 
 ## Contributing
 
