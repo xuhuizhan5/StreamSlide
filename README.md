@@ -1,8 +1,8 @@
 # StreamSlide
 
-StreamSlide is an AI-powered tool that transforms PDF documents into professional PowerPoint presentations with minimal effort. Leveraging Google's Gemini API, it automatically extracts content, captions images, and generates structured presentations.
+StreamSlide is an AI-powered tool that transforms PDF documents (especially research papers) into professional PowerPoint presentations with minimal effort. Leveraging Google's Gemini API, it automatically extracts content, captions images, and generates structured presentations.
 
-![StreamSlide Demo](https://placeholder-for-demo-image.png)
+![StreamSlide UI Demo](./demo/UI_demo.png)
 
 ## Features
 
@@ -10,9 +10,17 @@ StreamSlide is an AI-powered tool that transforms PDF documents into professiona
 - **AI Image Captioning**: Uses Gemini Vision to generate relevant captions for images
 - **Smart Content Generation**: Creates coherent presentation content based on document context
 - **Custom PowerPoint Creation**: Builds professional slides with appropriate text and image placement
-- **Presentation Templates**: Choose from multiple presentation styles
+- **Presentation Time Optimization**: Adjusts content density based on specified presentation duration
+- **Customizable Themes**: Personalize your presentation with color theme options
 - **User-Friendly Interface**: Simple Streamlit interface with progress tracking
 - **API Key Management**: Use environment variables or enter your API key directly
+
+## Demo
+
+Check out the demo folder for sample PDF documents and their generated PowerPoint presentations:
+
+- Sample PDF files in [demo/sample_pdfs/](/demo/sample_pdfs/)
+- Generated presentations in [demo/sample_presentations/](/demo/sample_presentations/)
 
 ## Installation
 
@@ -26,7 +34,7 @@ StreamSlide is an AI-powered tool that transforms PDF documents into professiona
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/StreamSlide.git
+   git clone https://github.com/xuhuizhan5/StreamSlide
    cd StreamSlide
    ```
 2. Create a virtual environment:
@@ -47,7 +55,7 @@ StreamSlide is an AI-powered tool that transforms PDF documents into professiona
 4. Install dependencies:
 
    ```bash
-   pip install streamlit google-generativeai langchain langchain-community pypdf python-pptx Pillow python-dotenv PyMuPDF requests
+   pip install streamlit google-generativeai langchain langchain-community pypdf python-pptx Pillow python-dotenv PyMuPDF requests docling pandas
    ```
 5. (Optional) Create a .env file with your Gemini API key:
 
@@ -65,45 +73,67 @@ StreamSlide is an AI-powered tool that transforms PDF documents into professiona
 2. Access the application in your web browser (typically at http://localhost:8501)
 3. Enter your Gemini API key if not already set in the .env file
 4. Upload a PDF document
-5. Describe what you want in the presentation
-6. Select a presentation template style
-7. Click "Generate Presentation" and watch the magic happen
-8. Download your professionally created PowerPoint presentation
+5. Configure presentation settings:
+
+   - Describe what you want in the presentation
+   - Set presentation duration (minutes)
+   - Customize color theme
+6. Click "Generate Presentation" and watch the magic happen
+7. Download your professionally created PowerPoint presentation
+
+## Workflow
+
+```mermaid
+graph TD
+    A[Upload PDF] --> B[PDF Processing]
+    B --> C[Extract Text]
+    B --> D[Extract Images]
+    B --> E[Extract Tables]
+    D --> F[Generate Image Captions]
+    E --> G[Generate Table Summaries]
+    C --> H[Optimize Content Structure]
+    F --> H
+    G --> H
+    H --> I[Generate Presentation Content]
+    I --> J[Create PowerPoint]
+    J --> K[Download Presentation]
+  
+    style A fill:#b5e8ff,stroke:#333
+    style J fill:#c9f7c9,stroke:#333
+    style K fill:#ffcccb,stroke:#333
+```
 
 ## How It Works
 
 StreamSlide processes your PDF in five key steps:
 
-1. **PDF Processing**: Extracts text and images from the uploaded PDF
+1. **PDF Processing**: Extracts text, images, and tables from the uploaded PDF
 2. **Image Analysis**: Uses Gemini Vision to understand and caption each image
-3. **Content Generation**: Creates presentation structure and content based on the document
-4. **Slide Creation**: Builds PowerPoint slides with appropriate layouts
-5. **Presentation Assembly**: Combines everything into a downloadable PowerPoint file
+3. **Content Generation**: Creates presentation structure and content based on the document and presentation time
+4. **Slide Creation**: Builds PowerPoint slides with appropriate layouts for different content types
+5. **Presentation Assembly**: Combines everything into a downloadable PowerPoint file with your selected theme
 
 ## Project Structure
 
+```
 StreamSlide/
-
 │
-
-├── app.py # Main application file
-
-├── .env # Environment variables (optional)
-
-├── README.md # Project documentation
-
-├── requirements.txt # Python dependencies
-
+├── app.py                  # Main application file
+├── .env                    # Environment variables (optional)
+├── README.md               # Project documentation
+├── requirements.txt        # Python dependencies
 │
-
-├── temp_files/ # Temporary processing files
-
-│ └── images/ # Extracted images
-
+├── demo/                   # Demo materials
+│   ├── UI_demo.png         # Screenshot of the interface
+│   ├── sample_pdfs/        # Example PDF documents
+│   └── sample_presentations/ # Generated presentations
 │
-
-└── output/ # Generated PowerPoint files
-
+├── temp_files/             # Temporary processing files
+│   └── images/             # Extracted images
+│   └── tables/             # Extracted tables
+│
+└── output/                 # Generated PowerPoint files
+```
 
 ## Requirements
 
@@ -116,6 +146,8 @@ StreamSlide/
 - python-dotenv
 - PyMuPDF
 - requests
+- docling
+- pandas
 
 ## Limitations
 
@@ -123,6 +155,7 @@ StreamSlide/
 - Complex images may receive generic captions
 - The free tier of Gemini API has rate limits
 - Only supports PDF files as input
+- Table formatting in PowerPoint is simplified
 
 ## Contributing
 
@@ -144,3 +177,4 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - Streamlit for the interactive web interface
 - PyMuPDF for PDF processing
 - python-pptx for PowerPoint generation
+- Docling for document processing assistance
